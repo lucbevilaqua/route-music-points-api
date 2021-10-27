@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: route-music-points-api
+    ports:
+      - '8888:8888'
+
+    volumes:
+      - .:/usr/src/server
+    network_mode: host

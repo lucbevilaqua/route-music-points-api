@@ -1,0 +1,41 @@
+name: route-music-points
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn add ci
+    - name: Login to Heroku Container registry
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_NAME_APPLICATION_KEY: ${{ secrets.HEROKU_NAME_APPLICATION_KEY }}
+      run: heroku container:login
+    - name: Registry
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_NAME_APPLICATION_KEY: ${{secrets.HEROKU_NAME_APPLICATION_KEY}}
+      run: docker build -f Dockerfile.prod -t registry.heroku.com/${HEROKU_NAME_APPLICATION_KEY}/web .
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_NAME_APPLICATION_KEY: ${{secrets.HEROKU_NAME_APPLICATION_KEY}}
+      run: docker push registry.heroku.com/${HEROKU_NAME_APPLICATION_KEY}/web:latest
+    - name: Release
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_NAME_APPLICATION_KEY: ${{ secrets.HEROKU_NAME_APPLICATION_KEY }}
+      run: heroku container:release web --app ${HEROKU_NAME_APPLICATION_KEY}

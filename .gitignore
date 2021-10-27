@@ -1,0 +1,48 @@
+node_modules/
+.env
+
+# IDEs
+/.codelite
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.env
+build
+
+# package-lock
+package-lock.json
+
+# compiled output
+/dist
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+tests/coverage
+tests/.nyc_output
+tests/playground
+
+# Config
+config/local.json
+config/development.json
+config/production.json
+config/dev.json
+config/prod.json

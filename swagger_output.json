@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api Route Music Points",
+    "description": "API com integracao do spotify"
+  },
+  "host": "route-music-points.herokuapp.com",
+  "servers": [
+    {
+      "url": "localhost:8888",
+      "description": "Development server",
+      "templates": {
+        "scheme": {
+          "enum": [
+            "https",
+            "http"
+          ],
+          "default": "http"
+        }
+      }
+    },
+    {
+      "url": "route-music-points.herokuapp.com",
+      "description": "Production server",
+      "templates": {
+        "scheme": {
+          "enum": [
+            "https",
+            "http"
+          ],
+          "default": "https"
+        }
+      }
+    }
+  ],
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/get-url-login": {
+      "get": {
+        "tags": [
+          "Spotify"
+        ],
+        "description": "Endpoint para pegar a url de login ao spotify.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/callback": {
+      "get": {
+        "tags": [
+          "Spotify"
+        ],
+        "description": "Endpoint de callback pós login do usuario ao spotify.",
+        "parameters": [
+          {
+            "name": "code",
+            "type": "string",
+            "required": true,
+            "in": "query",
+            "example": "as3412s12hg12kkn23b2"
+          },
+          {
+            "name": "state",
+            "type": "string",
+            "required": true,
+            "in": "query",
+            "example": "711E5fHFcFsmP68I"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}
